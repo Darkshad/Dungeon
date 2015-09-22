@@ -18,4 +18,8 @@ public abstract class Objects {
 	}
 	
 	abstract void use(Player p);
+
+	public String getName() {
+		return name;
+	}
 }

@@ -63,5 +63,9 @@ public abstract class Player extends Character {
 		System.out.println("You're choice is : " + line + "\n");
 		sc.close();
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
 }
