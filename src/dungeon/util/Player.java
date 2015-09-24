@@ -30,14 +30,18 @@ public  class Player extends Character {
 		this.inventory.add(o);
 	}
 	
+	
+	public List<Objects> getInventory(){
+		return this.inventory;
+	}
+	
 	// Afficher la liste des objets disponible pour le joueur
 	public void printObjects() {
 		int i;
 		i = 1;
 		Iterator<Objects> it = this.inventory.iterator();
 		while (it.hasNext()) {
-			System.out.println(i + " " + this.name + "\n");
-			it.next();
+			System.out.println(i + " " + it.next().getName() + "\n");
 			i++;
 		}
 	}
@@ -49,7 +53,8 @@ public  class Player extends Character {
 		this.printObjects();
 		String line = sc.nextLine();
 		try {
-			int n = Integer.parseInt(line);
+			int n = Integer.parseInt(line); // Transformer le choix du joueur en un entier pour recuperer l'objet
+			
 			this.inventory.get(n).use(this);
 		} 	
 		catch (NumberFormatException e) {

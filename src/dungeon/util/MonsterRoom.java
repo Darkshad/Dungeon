@@ -1,7 +1,8 @@
 package dungeon.util;
 
 public class MonsterRoom extends Room {
-	//Attributs
+	
+	//Attributes
 	Monster monster;
 	
 	//Constructor
