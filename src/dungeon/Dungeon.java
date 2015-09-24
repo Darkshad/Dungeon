@@ -11,10 +11,12 @@ import dungeon.util.*;
 public class Dungeon {
 	Player player;
 	Room currentRoom;
+	boolean endGame ;
 	
 	//Constructor
 	public Dungeon(Player player) {
 		this.player = player;
+		this.endGame = false;
 	}
 
 	//Methods
@@ -26,22 +28,23 @@ public class Dungeon {
 		return this.currentRoom;
 	}
 	
-	public String getCommand() {
+	public static String getCommand() {
 		Scanner sc = new Scanner(System.in); 
 		String line = sc.nextLine();
+		String res = line;
 		sc.close();
-		return line;
+		return res;
 	}
 	
 	public void changeName() {
 		System.out.println("Please,choose the name of your character\n");
-		String name = this.getCommand();
+		String name = Dungeon.getCommand();
 		player.setName(name);
 	}
 	
 	private Monster randomMonst() {
 		Random rand = new Random();
-		return new Monster("Troll",rand.nextInt(200),(new Weapon("Sword",rand.nextInt(75))),rand.nextInt(101));		
+		return new Monster("Troll",rand.nextInt(200)+20,(new Weapon("Sword",rand.nextInt(75)+15)),rand.nextInt(101)+10);		
 	}
 	
 	private void initTabRoom(Room[] tabRoom,String line){
@@ -152,6 +155,71 @@ public class Dungeon {
 			}
 
 			this.currentRoom = ent;
+		}
+		
+		public boolean gameIsFinish() {
+			return (!player.isDead() && currentRoom.getType().equals("Exit"));
+		}
+		
+	
+		public void interpretCommand() {
+			System.out.println("What do you want to do ?\n");
+			System.out.println("		type 'Go' to choose a room to go\n");
+			System.out.println("		type 'Description' to have a description of this room\n");
+			System.out.println("		type 'Inventory' to open the inventory and choose a object\n");
+			boolean commandIsValid = false;
+			while (!commandIsValid) {
+				switch(Dungeon.getCommand()) {
+				case "Go":
+					this.go();
+					commandIsValid = true;
+					break;
+				case "Description": 
+					currentRoom.describeRoom();
+					commandIsValid = true;
+					break;
+				case "Inventory":
+					player.choiceObjets();
+					commandIsValid = true;
+					break;
+					
+				default:
+					System.out.println("Incorrect! Choose a command between 'go' 'Description' and 'Iventory'\n");
+				}
+			}
+			
+		}
+		
+		 private void go() {
+			System.out.println("Where do you want to go ?\n");
+			Room next;
+			String com;
+			
+			boolean commandIsValid = false;
+			while(!commandIsValid) {
+				com = Dungeon.getCommand();
+				next = currentRoom.go(com);
+				if (next == null) {
+					System.out.println("Invalid direction! choose a valid direction to go to the next room you want:\n");
+					currentRoom.describeRoom();
+				}
+				else {
+					currentRoom = next;
+					commandIsValid = true;
+				}
+			}
+			
+		}
+
+		public void start() {
+			while (!gameIsFinish()) {
+				currentRoom.startEvent(player);
+				interpretCommand();
+			}
+			if(this.endGame == true)
+				System.out.println("***Congratulations!!***\n");
+			else
+				System.out.println("***Game Over***\n");
 		}
 		
 	}

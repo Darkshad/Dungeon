@@ -11,7 +11,7 @@ import org.junit.Test;
 public class TestDungeon {
 
 	@Test
-	public void testDungeon() throws IOException {
+	public void testCreateDungeon() throws IOException {
 		Player p1 = new Player("lille1",100,new Weapon("sword",15),75);
 		
 		Dungeon dg = new Dungeon(p1);
@@ -37,4 +37,15 @@ public class TestDungeon {
 		assertEquals("Intersection",dg2.getCurrentRoom().go("Est").go("North").go("Ouest").getType());
 	}
 
+	@Test
+	public void testStartDungeon() throws IOException {
+		Player p1 = new Player("lille1",100,new Weapon("sword",15),75);
+		
+		Dungeon dg = new Dungeon(p1);
+		dg.createDungeon("levels/TestLevel1.txt");
+		dg.start();
+		
+	}
+	
+	
 }
