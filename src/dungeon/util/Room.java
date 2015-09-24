@@ -36,7 +36,7 @@ public abstract class Room {
 		neighbors.put(instruction,neighbor);
 	}
 	
-	public String getCurrentRoom(){
+	public String getType(){
 		return this.type;
 	}
 	

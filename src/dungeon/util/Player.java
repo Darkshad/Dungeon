@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
-public abstract class Player extends Character {
+public  class Player extends Character {
 	
 	// Attributes
 	
@@ -64,6 +64,10 @@ public abstract class Player extends Character {
 		sc.close();
 	}
 
+	public void turn(Character character1) {
+		
+	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
