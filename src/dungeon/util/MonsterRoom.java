@@ -12,6 +12,7 @@ public class MonsterRoom extends Room {
 	}
 		
 	public void event(Player player) {
+		player.setInFight(true);
 		if(monster.getHealthPoint() >= 0) {
 			System.out.println("A savage monster appears");
 			System.out.println("You have to fight the " + monster.getName());
@@ -26,7 +27,7 @@ public class MonsterRoom extends Room {
 				System.out.println("You got killed by the monster");
 			
 		}
-		
+		player.setInFight(false);
 	}
 }
 
