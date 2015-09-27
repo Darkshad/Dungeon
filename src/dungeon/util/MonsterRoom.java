@@ -10,23 +10,41 @@ public class MonsterRoom extends Room {
 		super(type,instruction,hidden);
 		this.monster = monster;
 	}
+	
+	public Monster getMonster() {
+		return this.monster;
+	}
 		
 	public void event(Player player) {
 		player.setInFight(true);
-		if(monster.getHealthPoint() >= 0) {
+		if(!this.eventHappened) {
 			System.out.println("A savage monster appears");
-			System.out.println("You have to fight the " + monster.getName());
-			while(!monster.isDead() || !player.isDead()) {
+			System.out.println("You have to fight the " + monster.getName() + "\n");
+			
+			System.out.println(player.name + " Hp: " +player.getHealthPoint());
+			System.out.println(monster.name + " Hp: " +monster.getHealthPoint() + "\n");
+			
+			while(!monster.isDead() && !player.isDead()) {				
 				monster.turn(player);
-				player.turn(monster);
+				
+				System.out.println(player.name + " Hp: " +player.getHealthPoint());
+				System.out.println(monster.name + " Hp: " +monster.getHealthPoint() + "\n");
+				
+				if(!player.isDead())
+					player.turn(monster);
 			}
 			
 			if(monster.isDead()) 
-				System.out.println("You just defeated the monster");
-			if(player.isDead()) 
-				System.out.println("You got killed by the monster");
-			
+				System.out.println("You just defeated the monster\n");
+			if(player.isDead()) {
+				System.out.println("You got killed by the " + monster.getName() + "\n");
+				player.setFinishedGame(true);
+			}			
 		}
+		else {
+			System.out.println("You came in to a room where you killed a monster\n");
+		}
+		
 		player.setInFight(false);
 	}
 }

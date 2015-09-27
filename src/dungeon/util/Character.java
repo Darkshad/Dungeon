@@ -1,5 +1,7 @@
 package dungeon.util;
 
+import java.util.Random;
+
 public abstract class Character {
 	
 	// Attributes
@@ -44,9 +46,29 @@ public abstract class Character {
 		return (this.healthPoints <= 0);
 	}
 	
-	public void attack(Character character1){
-		 this.healthPoints -= character1.getWeapon().getDamage();
+	public void attack(Character character1) {
+		int dmg = weapon.getDamage();
+		Random rand = new Random();
+		
+		System.out.println(this.name + " attacked"); 
+		
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		if(rand.nextInt(100) < this.accuracy) {
+			character1.setHealthPoints(character1.getHealthPoint()-dmg);
+			
+			if (character1.getHealthPoint() < 0)
+				character1.setHealthPoints(0);
+			
+			System.out.println(character1.name + " lost " + dmg +" healths points\n");
+		}
+		else 
+			System.out.println("But he missed\n"); 
 	}
 	
-	abstract void turn(Character character1);
+	abstract void turn(Character character1) throws InterruptedException;
 }

@@ -7,8 +7,13 @@ public class EntranceRoom extends Room {
 	}
 	
 	public void event(Player player) {
-		System.out.println("Welcome to the dungeon.");
-		System.out.println("Get ready for some crazy challenge!!");
+		if(!this.eventHappened) {
+			System.out.println("Welcome to the dungeon.");
+			System.out.println("Get ready for some crazy challenge!!\n");
+		}
+		else
+			System.out.println("You are in the entrance\n");
+			
 	}
 
 }

@@ -11,12 +11,11 @@ import dungeon.util.*;
 public class Dungeon {
 	Player player;
 	Room currentRoom;
-	boolean endGame ;
+	static Scanner scannerCommand = new Scanner(System.in); 
 	
 	//Constructor
 	public Dungeon(Player player) {
 		this.player = player;
-		this.endGame = false;
 	}
 
 	//Methods
@@ -29,10 +28,8 @@ public class Dungeon {
 	}
 	
 	public static String getCommand() {
-		Scanner sc = new Scanner(System.in); 
-		String line = sc.nextLine();
+		String line = scannerCommand.nextLine();
 		String res = line;
-		sc.close();
 		return res;
 	}
 	
@@ -42,11 +39,26 @@ public class Dungeon {
 		player.setName(name);
 	}
 	
-	private Monster randomMonst() {
+	public static Monster randomMonst() {
 		Random rand = new Random();
 		return new Monster("Troll",rand.nextInt(200)+20,(new Weapon("Sword",rand.nextInt(75)+15)),rand.nextInt(101)+10);		
 	}
 	
+	/**
+	 * Init a Room table following the model in the string
+	 * This method use this representation for initializing the table:
+	 * 		E - EntranceRoom
+	 * 		T - TrapRoom
+	 * 		B - TreasureRoom
+	 * 		M - MonsterRoom
+	 * 		I - IntersectionRoom
+	 * 		O - ExitRoom
+	 * 		P - ExitRoomMonster
+	 * 		0 - null
+	 *
+	 * @param  tabRoom  The Room table we are initializing
+	 * @param  line  the model the Room table is using
+	 */
 	private void initTabRoom(Room[] tabRoom,String line){
 		for (int i = 0;i <= tabRoom.length-1; i++) {
 			switch (line.charAt(i)) {
@@ -60,13 +72,16 @@ public class Dungeon {
 					tabRoom[i] = new TreasureRoom("Treasure"," ",false, (new Potion("Potion")));
 					break;
 				case 'M':
-					tabRoom[i] = new MonsterRoom("Monster"," ",false, randomMonst());
+					tabRoom[i] = new MonsterRoom("Monster"," ",false, Dungeon.randomMonst());
 					break;
 				case 'I':
 					tabRoom[i] = new IntersectionRoom("Intersection"," ",false);
 					break;
 				case 'O':
 					tabRoom[i] = new ExitRoom("Exit"," ",false);
+					break;
+				case 'P':
+					tabRoom[i] = new ExitRoomMonster("ExitRoomMonster"," ",false);
 					break;
 				case '0':
 					tabRoom[i] = null;
@@ -157,10 +172,6 @@ public class Dungeon {
 			this.currentRoom = ent;
 		}
 		
-		public boolean gameIsFinish() {
-			return (!player.isDead() && currentRoom.getType().equals("Exit"));
-		}
-		
 	
 		public void interpretCommand() {
 			System.out.println("What do you want to do ?\n");
@@ -184,7 +195,7 @@ public class Dungeon {
 					break;
 					
 				default:
-					System.out.println("Incorrect! Choose a command between 'go' 'Description' and 'Iventory'\n");
+					System.out.println("Incorrect! Choose a command between 'go' 'Description' and 'Inventory'\n");
 				}
 			}
 			
@@ -212,15 +223,20 @@ public class Dungeon {
 		}
 
 		public void start() {
-			while (!gameIsFinish()) {
+			while (!player.finishedTheGame()) {
 				currentRoom.startEvent(player);
-				interpretCommand();
+				if(!player.finishedTheGame())
+					interpretCommand();
 			}
-			if(this.endGame == true)
+			if(!player.isDead()){
 				System.out.println("***Congratulations!!***\n");
+			}
 			else
 				System.out.println("***Game Over***\n");
+			
+			Dungeon.scannerCommand.close(); 
 		}
+		
 		
 	}
 	

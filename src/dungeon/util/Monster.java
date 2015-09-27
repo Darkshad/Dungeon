@@ -9,13 +9,19 @@ public class Monster extends Character {
 	}
 	
 	public void waitMonster() {
-		System.out.println("Monster choose to do nothing");
+		System.out.println(this.name + " choose to do nothing \n");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void turn(Character p) {
 		Random rand = new Random();
 		int choice = rand.nextInt(2);
-		
+
 		switch (choice) {
 		case 1:
 			this.attack(p);

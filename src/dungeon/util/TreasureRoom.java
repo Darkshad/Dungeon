@@ -12,9 +12,13 @@ public class TreasureRoom extends Room {
 	}
 				
 	public void event(Player j) {
-		System.out.println("You found a treasure \n");
-		System.out.println("It's a" + obj.getName());
-		j.takeObjects(this.obj);
+		if(!this.eventHappened) {
+			System.out.println("You found a treasure");
+			System.out.println("It's a " + obj.getName());
+			j.takeObjects(this.obj);
+		}
+		else
+			System.out.println("There was a treasure in this room but you already took it");
 		}
 	}
 

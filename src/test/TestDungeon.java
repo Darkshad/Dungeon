@@ -12,11 +12,10 @@ public class TestDungeon {
 
 	@Test
 	public void testCreateDungeon() throws IOException {
-		Player p1 = new Player("lille1",100,new Weapon("sword",15),75);
+		Player p1 = new Player("lille1",100,new Weapon("sword",40),75);
 		
 		Dungeon dg = new Dungeon(p1);
-		Dungeon dg2 = new Dungeon(p1)
-		;
+		Dungeon dg2 = new Dungeon(p1);
 		dg.createDungeon("levels/TestLevel1.txt");
 		dg2.createDungeon("levels/TestLevel2.txt");
 		
@@ -42,10 +41,11 @@ public class TestDungeon {
 		Player p1 = new Player("lille1",100,new Weapon("sword",15),75);
 		
 		Dungeon dg = new Dungeon(p1);
-		dg.createDungeon("levels/TestLevel1.txt");
+		dg.createDungeon("levels/TestLevel3.txt");
 		dg.start();
 		
 	}
+	
 	
 	
 }
