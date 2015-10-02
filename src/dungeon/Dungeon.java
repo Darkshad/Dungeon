@@ -6,12 +6,15 @@ import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
 
-import dungeon.util.*;
+import dungeon.character.*;
+import dungeon.room.*;
+import dungeon.object.*;
 
 public class Dungeon {
 	Player player;
 	Room currentRoom;
 	static Scanner scannerCommand = new Scanner(System.in); 
+	static Random rand = new Random();
 	
 	//Constructor
 	public Dungeon(Player player) {
@@ -32,7 +35,7 @@ public class Dungeon {
 		String res = line;
 		return res;
 	}
-	
+		
 	public void changeName() {
 		System.out.println("Please,choose the name of your character\n");
 		String name = Dungeon.getCommand();
@@ -40,7 +43,6 @@ public class Dungeon {
 	}
 	
 	public static Monster randomMonst() {
-		Random rand = new Random();
 		return new Monster("Troll",rand.nextInt(200)+20,(new Weapon("Sword",rand.nextInt(75)+15)),rand.nextInt(101)+10);		
 	}
 	
@@ -49,7 +51,10 @@ public class Dungeon {
 	 * This method use this representation for initializing the table:
 	 * 		E - EntranceRoom
 	 * 		T - TrapRoom
-	 * 		B - TreasureRoom
+	 * 		U - TreasureRoom with a potion
+	 * 	 	V - TreasureRoom with a key
+	 * 		W - TreasureRoom with a bomb
+	 * 	 	X - TreasureRoom with a weapon
 	 * 		M - MonsterRoom
 	 * 		I - IntersectionRoom
 	 * 		O - ExitRoom
@@ -68,8 +73,17 @@ public class Dungeon {
 				case 'T':
 					tabRoom[i] = new TrapRoom("Trap"," ",false);
 					break;
-				case 'B':
+				case 'U':
 					tabRoom[i] = new TreasureRoom("Treasure"," ",false, (new Potion("Potion")));
+					break;
+				case 'V':
+					tabRoom[i] = new TreasureRoom("Treasure"," ",false, (new Key("Key")));
+					break;
+				case 'W':
+					tabRoom[i] = new TreasureRoom("Treasure"," ",false, (new Bombs("Bombe",rand.nextInt(50)+10)));
+					break;
+				case 'X':
+					tabRoom[i] = new TreasureRoom("Treasure"," ",false, (new Weapon("Sword",rand.nextInt(100)+10)));
 					break;
 				case 'M':
 					tabRoom[i] = new MonsterRoom("Monster"," ",false, Dungeon.randomMonst());
@@ -219,9 +233,15 @@ public class Dungeon {
 					commandIsValid = true;
 				}
 			}
-			
 		}
 
+		 public String randomInstruction() {
+			 String[] word1 = {"behind","above","below"};
+			 String[] word2 = {"table","wall","carpet"};
+			 String instruction = new String(word1[rand.nextInt(3)] + " the " + word2[rand.nextInt(3)]);
+			 return instruction;
+		 }
+		 
 		public void start() {
 			while (!player.finishedTheGame()) {
 				currentRoom.startEvent(player);
@@ -240,7 +260,3 @@ public class Dungeon {
 		
 	}
 	
-
-	
-	
-

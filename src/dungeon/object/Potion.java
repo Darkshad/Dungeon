@@ -1,4 +1,5 @@
-package dungeon.util;
+package dungeon.object;
+import dungeon.character.Player;
 public class Potion extends Objects {
 	
 	// Attributes
@@ -20,6 +21,7 @@ public class Potion extends Objects {
 
 	public void use(Player p){
 		p.setHealthPoints(p.getHealthPoint()+this.soin);
+		p.getInventory().remove(this);
 	}
 	
 }

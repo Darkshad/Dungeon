@@ -1,10 +1,10 @@
-package dungeon.util;
+package dungeon.character;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import dungeon.Dungeon;
+import dungeon.object.*;
 
 public  class Player extends Character {
 	
@@ -63,8 +63,8 @@ public  class Player extends Character {
 		String line = Dungeon.getCommand();
 		try {
 			int n = Integer.parseInt(line); // Transformer le choix du joueur en un entier pour recuperer l'objet
-			
-			this.inventory.get(n).use(this);
+			System.out.println("You're choice is : " + this.inventory.get(n-1).getName() + "\n");
+			this.inventory.get(n-1).use(this);
 		} 	
 		catch (NumberFormatException e) {
 			System.out.println("You have to choose an object from the list.\n");
@@ -74,7 +74,7 @@ public  class Player extends Character {
 			System.out.println("You have to choose an object from the list\n");
 			this.choiceObjets();
 		}
-		System.out.println("You're choice is : " + line + "\n");
+		
 	}
 
 	public void turn(Character character1) {

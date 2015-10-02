@@ -1,5 +1,7 @@
-package dungeon.util;
-	
+package dungeon.object;
+
+import dungeon.character.Player;
+
 
 public class Weapon extends Objects {
 	
@@ -21,7 +23,9 @@ public class Weapon extends Objects {
 	}
 	
 	public void use(Player p){
+		p.takeObjects(p.getWeapon());
 		p.changeWeapon(new Weapon(this.name,this.damage));
+		p.getInventory().remove(this);
 	}
 	
 }

@@ -1,20 +1,20 @@
-package dungeon.util;
+package dungeon.room;
 
+import dungeon.character.Player;
 import dungeon.Dungeon;
 
-public class ExitRoomMonster extends Room{
+public class ExitRoomMonster extends MonsterRoom{
 
-	private MonsterRoom monsterRoom;
 	
 	public ExitRoomMonster(String type,String instruction,boolean hidden) {
-		super(type,instruction,hidden);
-		monsterRoom = new MonsterRoom(type,instruction,hidden,Dungeon.randomMonst());
+		super(type,instruction,hidden,Dungeon.randomMonst());
+
 	}
 	
 	public void event(Player player){
 		System.out.println("You arrived to the exit");
 		System.out.println("But it's not over yet");
-		this.monsterRoom.event(player);
+		super.event(player);
 
 		player.setFinishedGame(true);
 	}

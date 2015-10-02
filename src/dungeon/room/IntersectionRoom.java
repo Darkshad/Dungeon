@@ -1,4 +1,6 @@
-package dungeon.util;
+package dungeon.room;
+
+import dungeon.character.Player;
 
 public class IntersectionRoom extends Room {
 	public IntersectionRoom(String type,String instruction,boolean hidden) {

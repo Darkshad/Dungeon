@@ -1,4 +1,5 @@
-package dungeon.util;
+package dungeon.room;
+import dungeon.character.Player;
 
 public class EntranceRoom extends Room {
 	

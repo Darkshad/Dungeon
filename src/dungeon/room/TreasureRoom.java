@@ -1,4 +1,7 @@
-package dungeon.util;
+package dungeon.room;
+
+import dungeon.character.Player;
+import dungeon.object.Objects;;
 
 public class TreasureRoom extends Room {
 

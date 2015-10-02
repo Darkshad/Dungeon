@@ -1,4 +1,6 @@
-package dungeon.util;
+package dungeon.room;
+
+import dungeon.character.Player;
 
 public class KeyRoom extends Room{
 	//Attributs

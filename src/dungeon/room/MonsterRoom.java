@@ -1,4 +1,6 @@
-package dungeon.util;
+package dungeon.room;
+
+import dungeon.character.*;
 
 public class MonsterRoom extends Room {
 	
@@ -21,14 +23,14 @@ public class MonsterRoom extends Room {
 			System.out.println("A savage monster appears");
 			System.out.println("You have to fight the " + monster.getName() + "\n");
 			
-			System.out.println(player.name + " Hp: " +player.getHealthPoint());
-			System.out.println(monster.name + " Hp: " +monster.getHealthPoint() + "\n");
+			System.out.println(player.getName() + " Hp: " +player.getHealthPoint());
+			System.out.println(monster.getName() + " Hp: " +monster.getHealthPoint() + "\n");
 			
 			while(!monster.isDead() && !player.isDead()) {				
 				monster.turn(player);
 				
-				System.out.println(player.name + " Hp: " +player.getHealthPoint());
-				System.out.println(monster.name + " Hp: " +monster.getHealthPoint() + "\n");
+				System.out.println(player.getName() + " Hp: " +player.getHealthPoint());
+				System.out.println(monster.getName() + " Hp: " +monster.getHealthPoint() + "\n");
 				
 				if(!player.isDead())
 					player.turn(monster);

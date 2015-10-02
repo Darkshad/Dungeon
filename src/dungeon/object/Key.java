@@ -1,4 +1,5 @@
-package dungeon.util;
+package dungeon.object;
+import dungeon.character.Player;
 
 public class Key extends Objects{
 	
@@ -9,7 +10,7 @@ public class Key extends Objects{
 	}
 
 	
-	void use(Player p) {
+	public void use(Player p) {
 		// Debloquer booleen dans la classe KeyEvent
 	}
 }

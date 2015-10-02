@@ -1,4 +1,6 @@
-package dungeon.util;
+package dungeon.object;
+import dungeon.character.Player;
+
 public abstract class Objects {
 	
 	// Attributes
@@ -17,7 +19,7 @@ public abstract class Objects {
 		return this.name;
 	}
 	
-	abstract void use(Player p);
+	public abstract void use(Player p);
 
 	public String getName() {
 		return name;

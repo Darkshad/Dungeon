@@ -1,6 +1,8 @@
-package dungeon.util;
+package dungeon.character;
 
 import java.util.Random;
+
+import dungeon.object.Weapon;
 
 public abstract class Character {
 	

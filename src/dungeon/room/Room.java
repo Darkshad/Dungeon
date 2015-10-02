@@ -1,8 +1,10 @@
-package dungeon.util;
+package dungeon.room;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import dungeon.character.Player;
 
 
 public abstract class Room {
@@ -11,7 +13,7 @@ public abstract class Room {
 	
 	protected final String type;
 	protected final String instruction;
-	protected final boolean hidden ;
+	protected boolean hidden ;
 	protected boolean eventHappened;
 	protected Map<String,Room> neighbors = new HashMap<String,Room>();
 	
@@ -33,9 +35,12 @@ public abstract class Room {
 			return null;
 	}
 	
-	
 	public void setneighbors(String instruction, Room neighbor){
 		neighbors.put(instruction,neighbor);
+	}
+	
+	public Map<String,Room> getNeighbors() {
+		return this.neighbors;
 	}
 	
 	public String getType(){
@@ -48,6 +53,10 @@ public abstract class Room {
 		return this.hidden;
 	}
 	
+	public void nowHidden() {
+		this.hidden = true;
+	}
+	
 	public void describeRoom() {
 		Iterator<Room> itRoom = (neighbors.values()).iterator();
 		Iterator<String> itInstruction = (neighbors.keySet()).iterator();
@@ -55,16 +64,11 @@ public abstract class Room {
 			Room current = itRoom.next();
 			String instruction = itInstruction.next();
 			if(!current.isHidden())
-				System.out.println("There is a door in the " + instruction + " of this room");
+				System.out.println("There is a door in the " + instruction + " of this room\n");
 			else 
-				System.out.println("There is a " + instruction.substring(instruction.lastIndexOf(' ')+1) + "in this room"); //behind the wall = wall in this exemple
+				System.out.println("There is a " + instruction.substring(instruction.lastIndexOf(' ')+1) + " in this room"); //behind the wall = wall in this exemple
 			
-			if(itRoom.hasNext() && itInstruction.hasNext()) {
-				itRoom.next();
-				itInstruction.next();
-			}
 		}
-		System.out.println("\n");
 	}
 	
 	public void startEvent(Player player){

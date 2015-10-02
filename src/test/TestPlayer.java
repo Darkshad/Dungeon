@@ -1,9 +1,14 @@
 package test;
 
 import static org.junit.Assert.*;
+
 import java.util.Iterator;
-import dungeon.util.*;
+
 import org.junit.Test;
+
+import dungeon.character.Player;
+import dungeon.object.*;
+
 import java.util.LinkedList;
 import java.util.List;
 

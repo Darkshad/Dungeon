@@ -1,4 +1,5 @@
-package dungeon.util;
+package dungeon.object;
+import dungeon.character.Player;
 
 public class Bombs extends Objects {
 	
