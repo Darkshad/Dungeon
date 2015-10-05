@@ -1,6 +1,7 @@
 package dungeon.object;
+import dungeon.Dungeon;
 import dungeon.character.Player;
-public class Potion extends Objects {
+public class Potion extends ObjectsCanBeTaken {
 	
 	// Attributes
 	
@@ -8,8 +9,8 @@ public class Potion extends Objects {
 	
 	// Constructor
 	
-	public Potion(String name){
-		super(name);
+	public Potion(String name,Dungeon dg){
+		super(name,dg);
 		this.soin =  50;
 	}
 	
@@ -19,7 +20,8 @@ public class Potion extends Objects {
 		return this.soin;
 	}
 
-	public void use(Player p){
+	public void use(){
+		Player p = this.dg.getPlayer();
 		p.setHealthPoints(p.getHealthPoint()+this.soin);
 		p.getInventory().remove(this);
 	}

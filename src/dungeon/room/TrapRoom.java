@@ -1,15 +1,17 @@
 package dungeon.room;
-import dungeon.character.Player;
+import dungeon.Dungeon;
+
 
 public class TrapRoom extends Room{
 
-	public TrapRoom(String type,String instruction,boolean hidden) {
-		super(type,instruction,hidden);
+	public TrapRoom(String type,boolean hidden,Dungeon dungeon) {
+		super(type,hidden,dungeon);
 	}
 
-	public void event(Player player) {
+	public void event() {
 		System.out.println("It's a trap");
-		player.setHealthPoints(0);
+		this.dg.getPlayer().setHealthPoints(0);
+		this.dg.getPlayer().setFinishedGame(true);
 	}
 	
 }

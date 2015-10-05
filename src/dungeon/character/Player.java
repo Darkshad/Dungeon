@@ -3,6 +3,7 @@ package dungeon.character;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import dungeon.Dungeon;
 import dungeon.object.*;
 
@@ -58,21 +59,23 @@ public  class Player extends Character {
 
 	// Faire un choix dans la liste d'objets.
 	public void choiceObjets() {
-		System.out.println("Make a choice in the list and tap the number of you're choice\n");
+		System.out.println("Make a choice in the list and tap the number of you're choice,or tap exit for nothing\n");
 		this.printObjects();
 		String line = Dungeon.getCommand();
-		try {
-			int n = Integer.parseInt(line); // Transformer le choix du joueur en un entier pour recuperer l'objet
-			System.out.println("You're choice is : " + this.inventory.get(n-1).getName() + "\n");
-			this.inventory.get(n-1).use(this);
-		} 	
-		catch (NumberFormatException e) {
-			System.out.println("You have to choose an object from the list.\n");
-			this.choiceObjets();
-		}	
-		catch(IndexOutOfBoundsException e){
-			System.out.println("You have to choose an object from the list\n");
-			this.choiceObjets();
+		if(!line.equals("Exit")) {
+			try {
+				int n = Integer.parseInt(line); // Transformer le choix du joueur en un entier pour recuperer l'objet
+				System.out.println("You're choice is : " + this.inventory.get(n-1).getName() + "\n");
+				this.inventory.get(n-1).use();
+			} 	
+			catch (NumberFormatException e) {
+				System.out.println("You have to choose an object from the list.\n");
+				this.choiceObjets();
+			}	
+			catch(IndexOutOfBoundsException e){
+				System.out.println("You have to choose an object from the list\n");
+				this.choiceObjets();
+			}
 		}
 		
 	}
@@ -103,6 +106,11 @@ public  class Player extends Character {
 	
 	public boolean finishedTheGame() {
 		return this.finishedGame;
+	}
+	
+	public void statut() {
+		System.out.println(this.name + " Health points:" + this.healthPoints);
+		System.out.println("	weapon equipped: name " + this.weapon.getName() + ", Damage " + this.weapon.getDamage() + "\n");
 	}
 	
 }

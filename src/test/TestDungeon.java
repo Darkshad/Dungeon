@@ -14,10 +14,8 @@ public class TestDungeon {
 
 	@Test
 	public void testCreateDungeon() throws IOException {
-		Player p1 = new Player("lille1",100,new Weapon("sword",40),75);
-		
-		Dungeon dg = new Dungeon(p1);
-		Dungeon dg2 = new Dungeon(p1);
+		Dungeon dg = new Dungeon();
+		Dungeon dg2 = new Dungeon();
 		dg.createDungeon("levels/TestLevel1.txt");
 		dg2.createDungeon("levels/TestLevel2.txt");
 		
@@ -40,10 +38,12 @@ public class TestDungeon {
 
 	@Test
 	public void testStartDungeon() throws IOException {
-		Player p1 = new Player("lille1",100,new Weapon("sword",15),75);
-		p1.takeObjects(new Potion("popo"));
-		p1.takeObjects(new Weapon("gun",50));
-		Dungeon dg = new Dungeon(p1);
+		Dungeon dg = new Dungeon();
+		Player p1 = new Player("lille1",100,new Weapon("sword",dg,15),75);
+		dg.setPlayer(p1);
+		p1.takeObjects(new Potion("popo",dg));
+		p1.takeObjects(new Weapon("gun",dg,50));
+
 		dg.createDungeon("levels/TestLevel3.txt");
 		dg.start();
 		

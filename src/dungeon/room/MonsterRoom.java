@@ -1,5 +1,6 @@
 package dungeon.room;
 
+import dungeon.Dungeon;
 import dungeon.character.*;
 
 public class MonsterRoom extends Room {
@@ -8,8 +9,8 @@ public class MonsterRoom extends Room {
 	Monster monster;
 	
 	//Constructor
-	public MonsterRoom(String type,String instruction,boolean hidden,Monster monster) {
-		super(type,instruction,hidden);
+	public MonsterRoom(String type,boolean hidden,Dungeon dungeon,Monster monster) {
+		super(type,hidden,dungeon);
 		this.monster = monster;
 	}
 	
@@ -17,7 +18,8 @@ public class MonsterRoom extends Room {
 		return this.monster;
 	}
 		
-	public void event(Player player) {
+	public void event() {
+		Player player = this.dg.getPlayer();
 		player.setInFight(true);
 		if(!this.eventHappened) {
 			System.out.println("A savage monster appears");

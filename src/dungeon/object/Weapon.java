@@ -1,9 +1,10 @@
 package dungeon.object;
 
+import dungeon.Dungeon;
 import dungeon.character.Player;
 
 
-public class Weapon extends Objects {
+public class Weapon extends ObjectsCanBeTaken{
 	
 	// Attributes
 	
@@ -11,8 +12,8 @@ public class Weapon extends Objects {
 	
 	// Constructor
 	
-	public Weapon(String name, int damage){
-		super(name);
+	public Weapon(String name,Dungeon dg,int damage){
+		super(name,dg);
 		this.damage = damage;
 	}
 	
@@ -22,9 +23,10 @@ public class Weapon extends Objects {
 		return this.damage;
 	}
 	
-	public void use(Player p){
+	public void use(){
+		Player p = this.dg.getPlayer();
 		p.takeObjects(p.getWeapon());
-		p.changeWeapon(new Weapon(this.name,this.damage));
+		p.changeWeapon(new Weapon(this.name,this.dg,this.damage));
 		p.getInventory().remove(this);
 	}
 	

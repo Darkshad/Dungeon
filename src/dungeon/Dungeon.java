@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Stack;
 
 import dungeon.character.*;
 import dungeon.room.*;
@@ -15,13 +16,19 @@ public class Dungeon {
 	Room currentRoom;
 	static Scanner scannerCommand = new Scanner(System.in); 
 	static Random rand = new Random();
+	private Stack<Room> roomCrossed = new Stack<Room>();
 	
-	//Constructor
-	public Dungeon(Player player) {
-		this.player = player;
-	}
+
 
 	//Methods
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+	public void setPlayer(Player p) {
+		this.player = p;
+	}
+	
 	public void setCurrentRoom(Room r) {
 		this.currentRoom = r;
 	}
@@ -37,13 +44,36 @@ public class Dungeon {
 	}
 		
 	public void changeName() {
-		System.out.println("Please,choose the name of your character\n");
 		String name = Dungeon.getCommand();
 		player.setName(name);
+		System.out.println("The name of your character will be " + name);
 	}
 	
-	public static Monster randomMonst() {
-		return new Monster("Troll",rand.nextInt(200)+20,(new Weapon("Sword",rand.nextInt(75)+15)),rand.nextInt(101)+10);		
+	public Monster randomMonst() {
+		return new Monster("Troll",rand.nextInt(200)+20,(new Weapon("Sword",this,rand.nextInt(75)+15)),rand.nextInt(90)+10);		
+	}
+	
+	public void randomHiddenRoom(Room room,int nbHid){
+		for(int i = 0;i<nbHid;i++) {
+			if(Dungeon.rand.nextInt(4) == 0) {
+				switch(Dungeon.rand.nextInt(5)) {
+				case 0:
+					room.setneighbors(this.randomInstruction(),new TrapRoom("Trap",true,this));
+					break;
+				case 1:
+					room.setneighbors(this.randomInstruction(),new TreasureRoom("Treasure",true,this, (new Potion("Potion",this))));
+					break;
+				case 2:
+					room.setneighbors(this.randomInstruction(),new TreasureRoom("Treasure",true,this, (new Bombs("Bombe",this,rand.nextInt(30)+10))));
+					break;
+				case 3:
+					room.setneighbors(this.randomInstruction(),new TreasureRoom("Treasure",true,this, (new Weapon("Heavy Blade",this,rand.nextInt(150)+50))));
+					break;
+				default:
+					room.setneighbors(this.randomInstruction(),  new MonsterRoom("Monster",true,this, this.randomMonst()));
+				}
+			}
+		}
 	}
 	
 	/**
@@ -59,6 +89,7 @@ public class Dungeon {
 	 * 		I - IntersectionRoom
 	 * 		O - ExitRoom
 	 * 		P - ExitRoomMonster
+	 * 	  	Q - KeyRoom
 	 * 		0 - null
 	 *
 	 * @param  tabRoom  The Room table we are initializing
@@ -68,34 +99,37 @@ public class Dungeon {
 		for (int i = 0;i <= tabRoom.length-1; i++) {
 			switch (line.charAt(i)) {
 				case 'E':
-					tabRoom[i] = new EntranceRoom("Entrance"," ",false);
+					tabRoom[i] = new EntranceRoom("Entrance",false,this);
 					break;
 				case 'T':
-					tabRoom[i] = new TrapRoom("Trap"," ",false);
+					tabRoom[i] = new TrapRoom("Trap",false,this);
 					break;
 				case 'U':
-					tabRoom[i] = new TreasureRoom("Treasure"," ",false, (new Potion("Potion")));
+					tabRoom[i] = new TreasureRoom("Treasure",false,this, (new Potion("Potion",this)));
 					break;
 				case 'V':
-					tabRoom[i] = new TreasureRoom("Treasure"," ",false, (new Key("Key")));
+					tabRoom[i] = new TreasureRoom("Treasure",false,this, (new Key("Key",this)));
 					break;
 				case 'W':
-					tabRoom[i] = new TreasureRoom("Treasure"," ",false, (new Bombs("Bombe",rand.nextInt(50)+10)));
+					tabRoom[i] = new TreasureRoom("Treasure",false,this, (new Bombs("Bombe",this,rand.nextInt(30)+10)));
 					break;
 				case 'X':
-					tabRoom[i] = new TreasureRoom("Treasure"," ",false, (new Weapon("Sword",rand.nextInt(100)+10)));
+					tabRoom[i] = new TreasureRoom("Treasure",false,this, (new Weapon("Sword",this,rand.nextInt(100)+10)));
 					break;
 				case 'M':
-					tabRoom[i] = new MonsterRoom("Monster"," ",false, Dungeon.randomMonst());
+					tabRoom[i] = new MonsterRoom("Monster",false,this, this.randomMonst());
 					break;
 				case 'I':
-					tabRoom[i] = new IntersectionRoom("Intersection"," ",false);
+					tabRoom[i] = new IntersectionRoom("Intersection",false,this);
 					break;
 				case 'O':
-					tabRoom[i] = new ExitRoom("Exit"," ",false);
+					tabRoom[i] = new ExitRoom("Exit",false,this);
 					break;
 				case 'P':
-					tabRoom[i] = new ExitRoomMonster("ExitRoomMonster"," ",false);
+					tabRoom[i] = new ExitRoomMonster("ExitRoomMonster",false,this);
+					break;
+				case 'Q':
+					tabRoom[i] = new KeyRoom("KeyRoom",false,this);
 					break;
 				case '0':
 					tabRoom[i] = null;
@@ -103,6 +137,8 @@ public class Dungeon {
 				default:
 					System.out.println("Dungeon.initTabRoom : incorrect character \n");
 			}
+			if(tabRoom[i] != null)
+				this.randomHiddenRoom(tabRoom[i], Dungeon.rand.nextInt(3));
 		}
 	}
 		
@@ -192,6 +228,8 @@ public class Dungeon {
 			System.out.println("		type 'Go' to choose a room to go\n");
 			System.out.println("		type 'Description' to have a description of this room\n");
 			System.out.println("		type 'Inventory' to open the inventory and choose a object\n");
+			System.out.println("		type 'GoBack' to return to the previous room \n");
+			System.out.println("		type 'Statut' to see your character statut \n");
 			boolean commandIsValid = false;
 			while (!commandIsValid) {
 				switch(Dungeon.getCommand()) {
@@ -208,8 +246,18 @@ public class Dungeon {
 					commandIsValid = true;
 					break;
 					
+				case "GoBack":
+					this.goBack();
+					commandIsValid = true;
+					break;
+					
+				case "Statut":
+					this.player.statut();
+					commandIsValid = true;
+					break;
+					
 				default:
-					System.out.println("Incorrect! Choose a command between 'go' 'Description' and 'Inventory'\n");
+					System.out.println("Incorrect! Choose a command between 'go','Description','Inventory','GoBack' or 'Statut'\n");
 				}
 			}
 			
@@ -225,16 +273,24 @@ public class Dungeon {
 				com = Dungeon.getCommand();
 				next = currentRoom.go(com);
 				if (next == null) {
-					System.out.println("Invalid direction! choose a valid direction to go to the next room you want:\n");
+					System.out.println("Invalid direction! 'goBack' for going back or choose a valid direction to go to the next room you want:\n");
 					currentRoom.describeRoom();
 				}
 				else {
+					this.roomCrossed.push(currentRoom);
 					currentRoom = next;
 					commandIsValid = true;
 				}
 			}
 		}
 
+		 public void goBack() {
+			 if(this.roomCrossed.isEmpty()) 
+				 System.out.println("You can't go back more");
+			 else 
+				 this.currentRoom = this.roomCrossed.pop();
+		 }
+		 
 		 public String randomInstruction() {
 			 String[] word1 = {"behind","above","below"};
 			 String[] word2 = {"table","wall","carpet"};
@@ -244,19 +300,61 @@ public class Dungeon {
 		 
 		public void start() {
 			while (!player.finishedTheGame()) {
-				currentRoom.startEvent(player);
+				currentRoom.startEvent();
 				if(!player.finishedTheGame())
 					interpretCommand();
 			}
 			if(!player.isDead()){
-				System.out.println("***Congratulations!!***\n");
+				System.out.println("***Well played***");
+				System.out.println("You finished this dungeon\n");
+				player.setFinishedGame(false);
 			}
 			else
 				System.out.println("***Game Over***\n");
 			
-			Dungeon.scannerCommand.close(); 
+
 		}
 		
-		
+		public static void main(String [] args) throws IOException{
+			Dungeon dg = new Dungeon();
+			Player p1 = new Player("",150,new Weapon("sword",dg,Dungeon.rand.nextInt(30)+20),60);
+			dg.setPlayer(p1);
+			int level = 1;
+			System.out.println("***Welcome to Dungeon,the most epic game ever!!***\n");
+			System.out.println("Rule are simple:");
+			System.out.println("	you start the game at the entrance of the dungeon and you have to go the exit");
+			System.out.println("	ther are many room (monster,treasure,even trap!!) before the exit");
+			System.out.println("	once you got the exit,another dungeon will start");
+			System.out.println("	you have to do this until you arrive at the exit of the last to become the true hero");
+			System.out.println("	but watch out,anything can happen!");
+			System.out.println("	there can be hidden room,for example try to go under or above or behind a table if you find one to see what will happen....\n");
+			System.out.println("***First,choose the name of your character***");
+			dg.changeName();
+			System.out.println("The game will start now,i hope you are ready....");
+			
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			while(level != 6 && !p1.isDead()) {
+				System.out.println("Level" + level);
+				
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+				dg.createDungeon("levels/Level" + level);
+				dg.start();
+				level += 1;
+			}
+			if(!p1.isDead()) {
+				System.out.println("***Congratulations,you finished the game!***");
+				System.out.println("You are now a true hero");
+			}
+			Dungeon.scannerCommand.close(); 
+		}
 	}
 	

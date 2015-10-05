@@ -1,13 +1,14 @@
 package dungeon.room;
-import dungeon.character.Player;
+import dungeon.Dungeon;
+
 
 public class EntranceRoom extends Room {
 	
-	public EntranceRoom(String type,String instruction,boolean hidden) {
-		super(type,instruction,hidden);
+	public EntranceRoom(String type,boolean hidden,Dungeon dungeon) {
+		super(type,hidden,dungeon);
 	}
 	
-	public void event(Player player) {
+	public void event() {
 		if(!this.eventHappened) {
 			System.out.println("Welcome to the dungeon.");
 			System.out.println("Get ready for some crazy challenge!!\n");

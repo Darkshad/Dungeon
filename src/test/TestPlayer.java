@@ -2,22 +2,20 @@ package test;
 
 import static org.junit.Assert.*;
 
-import java.util.Iterator;
 
 import org.junit.Test;
-
+import dungeon.Dungeon;
 import dungeon.character.Player;
 import dungeon.object.*;
-
 import java.util.LinkedList;
-import java.util.List;
 
 public class TestPlayer {
 
 	@Test
 	public void testCreationPlayer() {
-		Weapon w1 = new Weapon("gun",25);
-		Weapon w2 = new Weapon("kick",10);
+		Dungeon dg = new Dungeon();
+		Weapon w1 = new Weapon("gun",dg,25);
+		Weapon w2 = new Weapon("kick",dg,10);
 		Player p1 = new Player("toto",200,w1,50);
 		assertEquals(p1.getHealthPoint(),200);
 		assertEquals(p1.getName(),"toto");
@@ -28,8 +26,9 @@ public class TestPlayer {
 
 	@Test
 	public void testTakeObjects(){
-		Weapon w1 = new Weapon("gun",25);
-		Player p1 = new Player("toto",200,new Weapon("kick",10),50);
+		Dungeon dg = new Dungeon();
+		Weapon w1 = new Weapon("gun",dg,25);
+		Player p1 = new Player("toto",200,new Weapon("kick",dg,10),50);
 		p1.takeObjects(w1);
 		assertTrue(p1.getInventory().contains(w1));
 	}
@@ -37,7 +36,8 @@ public class TestPlayer {
 	@Test
 	public void testGetInventory(){
 		LinkedList<Objects> w1 = new LinkedList<Objects>();
-		Player p1 = new Player("toto",200,new Weapon("kick",10),50);
+		Dungeon dg = new Dungeon();
+		Player p1 = new Player("toto",200,new Weapon("kick",dg,10),50);
 		assertEquals(p1.getInventory(),w1);
 	}
 	
@@ -47,9 +47,10 @@ public class TestPlayer {
 	
 	@Test // To verify this test you should be look the result in the console to see the print.
 	public void testPrintObject(){
-		Player p1 = new Player("toto",200,new Weapon("kick",10),50);
-		Weapon w1 = new Weapon("gun",50);
-		Weapon w2 = new Weapon("pistol",40);
+		Dungeon dg = new Dungeon();
+		Player p1 = new Player("toto",200,new Weapon("kick",dg,10),50);
+		Weapon w1 = new Weapon("gun",dg,50);
+		Weapon w2 = new Weapon("pistol",dg,40);
 		p1.takeObjects(w2);
 		p1.takeObjects(w1);
 		p1.printObjects();
@@ -57,9 +58,11 @@ public class TestPlayer {
 	
 	@Test
 	public void testChoiceObjects(){
-		Player p1 = new Player("toto",200,new Weapon("kick",10),50);
-		Weapon w1 = new Weapon("gun",20);
-		Potion pt1 = new Potion("popo");
+		Dungeon dg = new Dungeon();
+		Player p1 = new Player("toto",200,new Weapon("kick",dg,10),50);
+		dg.setPlayer(p1);
+		Weapon w1 = new Weapon("gun",dg,20);
+		Potion pt1 = new Potion("popo",dg);
 		p1.takeObjects(w1);
 		p1.takeObjects(pt1);
 		p1.choiceObjets();

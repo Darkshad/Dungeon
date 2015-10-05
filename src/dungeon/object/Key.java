@@ -1,16 +1,24 @@
 package dungeon.object;
-import dungeon.character.Player;
+import dungeon.Dungeon;
+import dungeon.room.Room;
 
-public class Key extends Objects{
+public class Key extends ObjectsCanBeTaken{
 	
 	// Constructor
 	
-	public Key(String name){
-		super(name);
+	public Key(String name,Dungeon dg){
+		super(name,dg);
 	}
 
 	
-	public void use(Player p) {
-		// Debloquer booleen dans la classe KeyEvent
+	public void use() {
+		Room room = this.dg.getCurrentRoom();
+		if(room.isLocked()) {
+			room.unlock();
+			this.dg.getPlayer().getInventory().remove(this);
+			System.out.println("The door is now open");
+		}
+		else
+			System.out.println("There is no room to unlock");
 	}
 }

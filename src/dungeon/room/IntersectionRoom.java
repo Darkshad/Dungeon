@@ -1,13 +1,14 @@
 package dungeon.room;
 
-import dungeon.character.Player;
+import dungeon.Dungeon;
+
 
 public class IntersectionRoom extends Room {
-	public IntersectionRoom(String type,String instruction,boolean hidden) {
-		super(type,instruction,hidden);
+	public IntersectionRoom(String type,boolean hidden,Dungeon dungeon) {
+		super(type,hidden,dungeon);
 	}
 	
-	public void event(Player player) {
+	public void event() {
 		System.out.println("This room is normal and empty\n");
 	}
 

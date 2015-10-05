@@ -1,7 +1,7 @@
 package dungeon.room;
 
-import dungeon.character.Player;
-import dungeon.object.Objects;;
+import dungeon.Dungeon;
+import dungeon.object.Objects;
 
 public class TreasureRoom extends Room {
 
@@ -9,16 +9,19 @@ public class TreasureRoom extends Room {
 	private Objects obj;
 				
 	//Constructor 
-	public TreasureRoom (String type,String instruction,boolean hidden,Objects o) {
-		super(type,instruction,hidden);
+	public TreasureRoom (String type,boolean hidden,Dungeon dungeon,Objects o) {
+		super(type,hidden,dungeon);
 		this.obj = o;
 	}
 				
-	public void event(Player j) {
+	public void event() {
 		if(!this.eventHappened) {
 			System.out.println("You found a treasure");
 			System.out.println("It's a " + obj.getName());
-			j.takeObjects(this.obj);
+			if(obj.canBeTaken())
+				this.dg.getPlayer().takeObjects(this.obj);
+			else
+				obj.use();
 		}
 		else
 			System.out.println("There was a treasure in this room but you already took it");

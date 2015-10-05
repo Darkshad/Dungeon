@@ -1,7 +1,8 @@
 package dungeon.object;
-import dungeon.character.Player;
+import dungeon.Dungeon;
 
-public class Bombs extends Objects {
+
+public class Bombs extends ObjectsCanNotBeTaken {
 	
 	// Attributes
 	
@@ -9,15 +10,18 @@ public class Bombs extends Objects {
 	
 	// Constructor
 	
-	public Bombs(String name, int damage){
-		super(name);
+	public Bombs(String name,Dungeon dg, int damage){
+		super(name,dg);
 		this.damage = damage;
 	}
 	
 	// Methods
 	
-	public void use(Player p){
-		p.setHealthPoints(p.getHealthPoint()-this.damage);
+	public void use(){
+		this.dg.getPlayer().setHealthPoints(this.dg.getPlayer().getHealthPoint()-this.damage);
+		System.out.println("Its a trapped treasure!");
+		System.out.println("The bomb exploded!!!");
+		System.out.println(this.dg.getPlayer().getName() + " lost " + this.damage);
 	}
 	
 }

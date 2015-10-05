@@ -1,16 +1,19 @@
 package dungeon.object;
-import dungeon.character.Player;
+
+import dungeon.Dungeon;
 
 public abstract class Objects {
 	
 	// Attributes
+	Dungeon dg;
 	
 	protected String name;
 	
 	// Constructor
 	
-	public Objects(String name){
+	public Objects(String name,Dungeon dg){
 		this.name = name;
+		this.dg = dg;
 	}
 	
 	// Methods
@@ -19,7 +22,9 @@ public abstract class Objects {
 		return this.name;
 	}
 	
-	public abstract void use(Player p);
+	public abstract void use();
+	
+	public abstract boolean canBeTaken();
 
 	public String getName() {
 		return name;

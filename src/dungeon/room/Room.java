@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import dungeon.character.Player;
+import dungeon.Dungeon;
+
 
 
 public abstract class Room {
@@ -12,19 +13,18 @@ public abstract class Room {
 	// Attributes
 	
 	protected final String type;
-	protected final String instruction;
 	protected boolean hidden ;
 	protected boolean eventHappened;
+	protected Dungeon dg;
 	protected Map<String,Room> neighbors = new HashMap<String,Room>();
 	
 	// Constructor
-	public Room(String type, String instruction,boolean hidden){
+	public Room(String type,boolean hidden,Dungeon dungeon){
 		this.type = type;
-		this.instruction = instruction;
 		this.hidden = hidden;
 		this.eventHappened = false;
+		this.dg = dungeon;
 	}
-	
 	
 	// Methods
 	
@@ -47,7 +47,7 @@ public abstract class Room {
 		return this.type;
 	}
 	
-	public abstract void event(Player player);
+	public abstract void event();
 	
 	public boolean isHidden() {	
 		return this.hidden;
@@ -64,19 +64,27 @@ public abstract class Room {
 			Room current = itRoom.next();
 			String instruction = itInstruction.next();
 			if(!current.isHidden())
-				System.out.println("There is a door in the " + instruction + " of this room\n");
+				System.out.println("There is a door in the " + instruction + " of this room");
 			else 
 				System.out.println("There is a " + instruction.substring(instruction.lastIndexOf(' ')+1) + " in this room"); //behind the wall = wall in this exemple
 			
 		}
 	}
 	
-	public void startEvent(Player player){
-		this.event(player);
+	public void startEvent(){
+		this.event();
 		if(this.eventHappened == false)
 			this.eventHappened = true;
 	}
 
+	public boolean isLocked() {
+		return false;
+	}
+
+	public void unlock() {
+	}
+
+	
 }
 	
 	
