@@ -134,8 +134,6 @@ public class Dungeon {
 				case '0':
 					tabRoom[i] = null;
 					break;
-				default:
-					System.out.println("Dungeon.initTabRoom : incorrect character \n");
 			}
 			if(tabRoom[i] != null)
 				this.randomHiddenRoom(tabRoom[i], Dungeon.rand.nextInt(3));
@@ -147,13 +145,11 @@ public class Dungeon {
 					r1.setneighbors("Est", r2);
 					r2.setneighbors("Ouest", r1);	
 			}
-			else if (c == 'N') {
+			else {
 				r1.setneighbors("North", r2);
 				r2.setneighbors("South", r1);	
 			}
 			
-			else
-				System.out.println("Dungeon.LinkRoom : invalid character \n");
 		}
 		
 		private void linkRoomTabLine(Room[] tab) {
@@ -185,11 +181,12 @@ public class Dungeon {
 		private EntranceRoom searchEntranceRoom(Room[] tab) {
 			int i = 0;
 			while(i <= tab.length-1 ) {
-				if(tab[i] instanceof EntranceRoom ) {
-					return (EntranceRoom) tab[i];
+				if(tab[i] != null) {
+					if(tab[i].getType().equals("Entrance") ) {
+						return (EntranceRoom) tab[i];
+					}
 				}
-				else
-					i += 1;
+				i += 1;
 			}
 			return null;
 		}
