@@ -20,8 +20,8 @@ public class MonsterRoom extends Room {
 		
 	public void event() {
 		Player player = this.dg.getPlayer();
-		player.setInFight(true);
 		if(!this.eventHappened) {
+			player.setInFight(true);
 			System.out.println("A savage monster appears");
 			System.out.println("You have to fight the " + monster.getName() + "\n");
 			
@@ -44,12 +44,12 @@ public class MonsterRoom extends Room {
 				System.out.println("You got killed by the " + monster.getName() + "\n");
 				player.setFinishedGame(true);
 			}			
+			player.setInFight(false);
 		}
 		else {
 			System.out.println("You came in to a room where you killed a monster\n");
 		}
-		
-		player.setInFight(false);
+	
 	}
 }
 
