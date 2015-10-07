@@ -17,9 +17,22 @@ import org.junit.Test;
 
 public class TestRoom {
 	
+
 	/**
 	 * Test all methods in the class Room
 	 */
+
+	@Test
+	public void testCreateRoom(){
+		Dungeon d1 = new Dungeon();
+		KeyRoom r = new KeyRoom("key",false,d1);
+		assertEquals(r.getType(),"key");
+		assertNotEquals(r.getType(),"trap");
+		assertEquals(r.isHidden(),false);
+		assertNotEquals(r.isHidden(),true);		
+	}
+
+
 	@Test
 	public void testRoom() {
 		Dungeon dg = new Dungeon();
@@ -31,6 +44,7 @@ public class TestRoom {
 		entrance.setneighbors("under the table", trap);
 		assertEquals("Entrance",entrance.getType());
 		
+
 		entrance.describeRoom();
 		
 		entrance.unlock();
@@ -97,9 +111,6 @@ public class TestRoom {
 		trap.startEvent();
 		
 		assertTrue(p1.isDead());
-		
-		
+			
 	}
-	
-
 }

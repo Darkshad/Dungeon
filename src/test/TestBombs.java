@@ -18,6 +18,7 @@ public class TestBombs {
 		assertEquals(b1.getDamage(),30);
 		assertNotEquals(b1.getDamage(),50);
 		Player p1 = new Player("toto",200,new Weapon("kick",d1,10),40);
+		d1.setPlayer(p1);
 		b1.use();
 		assertEquals(p1.getHealthPoint(),170);
 		assertNotEquals(p1.getHealthPoint(),230);

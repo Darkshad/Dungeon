@@ -30,6 +30,7 @@ public class TestWeapon {
 		assertFalse(p1.getInventory().contains(w1));
 		assertEquals(p1.getWeapon(),w1);
 		assertNotEquals(p1.getWeapon(),w2);
+		d1.setPlayer(p1);
 		w2.use();
 		assertTrue(p1.getInventory().contains(w1));
 		assertFalse(p1.getInventory().contains(w2));
