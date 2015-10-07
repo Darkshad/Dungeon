@@ -26,7 +26,7 @@ public class Weapon extends ObjectsCanBeTaken{
 	public void use(){
 		Player p = this.dg.getPlayer();
 		p.takeObjects(p.getWeapon());
-		p.changeWeapon(new Weapon(this.name,this.dg,this.damage));
+		p.changeWeapon(this);
 		p.getInventory().remove(this);
 	}
 	
