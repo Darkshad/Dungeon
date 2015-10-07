@@ -17,7 +17,7 @@ public class TreasureRoom extends Room {
 	public void event() {
 		if(!this.eventHappened) {
 			System.out.println("You found a treasure");
-			System.out.println("It's a " + obj.getName());
+			System.out.println("It's a " + obj.getObjects());
 			if(obj.canBeTaken())
 				this.dg.getPlayer().takeObjects(this.obj);
 			else

@@ -56,7 +56,7 @@ public  class Player extends Character {
 		i = 1;
 		Iterator<Objects> it = this.inventory.iterator();
 		while (it.hasNext()) {
-			System.out.println(i + " " + it.next().getName() + "\n");
+			System.out.println(i + " " + it.next().getObjects() + "\n");
 			i++;
 		}
 	}
@@ -69,7 +69,7 @@ public  class Player extends Character {
 		if(!line.equals("Exit")) {
 			try {
 				int n = Integer.parseInt(line); // Transformer le choix du joueur en un entier pour recuperer l'objet
-				System.out.println("You're choice is : " + this.inventory.get(n-1).getName() + "\n");
+				System.out.println("You're choice is : " + this.inventory.get(n-1).getObjects() + "\n");
 				this.inventory.get(n-1).use();
 			} 	
 			catch (NumberFormatException e) {
@@ -114,7 +114,7 @@ public  class Player extends Character {
 	
 	public void statut() {
 		System.out.println(this.name + " Health points:" + this.healthPoints);
-		System.out.println("	weapon equipped: name " + this.weapon.getName() + ", Damage " + this.weapon.getDamage() + "\n");
+		System.out.println("	weapon equipped: name " + this.weapon.getObjects() + ", Damage " + this.weapon.getDamage() + "\n");
 	}
 	
 }
