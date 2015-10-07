@@ -41,6 +41,10 @@ public  class Player extends Character {
 		return this.inventory;
 	}
 
+	public boolean getInFight(){
+		return this.inFight;
+	}
+	
 	public void setInFight(boolean etat) {
 		this.inFight = etat;
 	}

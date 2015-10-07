@@ -17,8 +17,12 @@ public class Bombs extends ObjectsCanNotBeTaken {
 	
 	// Methods
 	
+	public int getDamage(){
+		return this.damage;
+	}
+	
 	public void use(){
-		this.dg.getPlayer().setHealthPoints(this.dg.getPlayer().getHealthPoint()-this.damage);
+		this.dg.getPlayer().setHealthPoints((this.dg.getPlayer().getHealthPoint())-this.damage);
 		System.out.println("Its a trapped treasure!");
 		System.out.println("The bomb exploded!!!");
 		System.out.println(this.dg.getPlayer().getName() + " lost " + this.damage);

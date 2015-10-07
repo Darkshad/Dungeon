@@ -36,6 +36,10 @@ public abstract class Character {
 		return this.healthPoints;
 	}
 	
+	public int getAccuracy(){
+		return this.accuracy;
+	}
+	
 	public void setHealthPoints(int i){
 		this.healthPoints = i ;
 	}
