@@ -15,6 +15,13 @@ import dungeon.room.TrapRoom;
 
 import org.junit.Test;
 
+/**
+ * Class TestRoom from the package dungeon.test.
+ * This class is in charge of the test of the class Room
+ * @author Guyot Clement - Cornaire Francis
+ * Licence 3 Miage - 2015/2016
+ */
+
 public class TestRoom {
 	
 
@@ -40,6 +47,7 @@ public class TestRoom {
 		Room trap = new TrapRoom("Trap",true,dg);
 		Room intersection = new IntersectionRoom("Intersection",false,dg);
 
+		dg.setCurrentRoom(entrance);
 		entrance.setneighbors("Ouest", intersection);
 		entrance.setneighbors("under the table", trap);
 		assertEquals("Entrance",entrance.getType());

@@ -7,6 +7,13 @@ import dungeon.character.Player;
 import org.junit.Test;
 import dungeon.object.Weapon;
 
+/**
+ * Class TestWeapon from the package dungeon.test.
+ * This class is in charge of the test of the class Weapon
+ * @author Guyot Clement - Cornaire Francis
+ * Licence 3 Miage - 2015/2016
+ */
+
 public class TestWeapon {
 
 	@Test

@@ -11,6 +11,13 @@ import dungeon.object.*;
 
 import java.util.LinkedList;
 
+/**
+ * Class TestPlayer from the package dungeon.test.
+ * This class is in charge of the test of the class Player
+ * @author Guyot Clement - Cornaire Francis
+ * Licence 3 Miage - 2015/2016
+ */
+
 public class TestPlayer {
 
 	@Test

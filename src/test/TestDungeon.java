@@ -7,6 +7,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+/**
+ * Class TestDungeon from the package dungeon.test.
+ * This class is in charge of the test of the class Dungeon
+ * @author Guyot Clement - Cornaire Francis
+ * Licence 3 Miage - 2015/2016
+ */
+
 public class TestDungeon {
 
 	@Test

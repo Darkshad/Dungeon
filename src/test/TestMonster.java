@@ -6,6 +6,14 @@ import dungeon.object.*;
 
 import org.junit.Test;
 import dungeon.character.*;
+
+/**
+ * Class TestMonster from the package dungeon.test.
+ * This class is in charge of the test of the class Monster
+ * @author Guyot Clement - Cornaire Francis
+ * Licence 3 Miage - 2015/2016
+ */
+
 public class TestMonster {
 
 	

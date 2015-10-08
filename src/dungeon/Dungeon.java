@@ -11,6 +11,14 @@ import dungeon.character.*;
 import dungeon.room.*;
 import dungeon.object.*;
 
+/**
+ * Class Dungeon from package dungeon
+ * Its the main class of the game.
+ * This class is in charge loading,creating the dungeon and launch it 
+ * @author Guyot Clement - Cornaire Francis
+ * Licence 3 Miage - 2015/2016
+ */
+
 public class Dungeon {
 	Player player;
 	Room currentRoom;
